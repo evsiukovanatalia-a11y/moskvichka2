@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Имитация сайта — брендинг 1440px</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --content-width: 1160px;
+    --header-height: 114px;
+    --brand-width: 160px;
+    --brand-height: 460px;
+    --banner-height: 160px;
+    --banner-bg: #D1E5D7;
+    --gutter: 40px;
+    --gold-start: #E8C084;
+    --gold-end: #D7A457;
+    --muted: #8E8E8E;
+    --hairline: #F6F6F6;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    overflow-x: hidden; /* подстраховка от случайного горизонтального скролла */
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #ffffff;
+    color: #0f0f0f;
+  }
+
+  /* делаем body контейнером позиционирования для .branding,
+     чтобы заливка растягивалась на всю фактическую высоту страницы */
+  body {
+    position: relative;
+  }
+
+  /* ===== Контентная колонка, тянется до 1160px по центру ===== */
+  .content {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===================== ХЕДЕР ===================== */
+  /* Хедер встроен в основную колонку и не выходит за её ширину 1160px. */
+  header.site-header {
+    position: relative;
+    z-index: 5;
+    background: #fff;
+    border-bottom: 1px solid var(--hairline);
+    width: 100%;
+    height: var(--header-height);
+  }
+
+  .header-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 68px;
+    padding: 8px 0;
+  }
+
+  .header-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 366px;
+    height: 44px;
+    color: var(--muted);
+  }
+
+  .header-search svg { flex: 0 0 auto; }
+
+  .header-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    background: transparent;
+    color: #0f0f0f;
+    font: 500 16px/1.4 "Manrope", sans-serif;
+  }
+
+  .header-search input::placeholder { color: var(--muted); opacity: 1; }
+
+  .header-logo {
+    width: 200px;
+    height: 28px;
+  }
+
+  .header-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .header-login {
+    justify-self: end;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #0f0f0f;
+    font: 500 16px/1.4 "Manrope", sans-serif;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 46px;
+    padding: 4px 0;
+    overflow: hidden;
+  }
+
+  .header-nav a {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    color: #0f0f0f;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header-nav a.active {
+    gap: 8px;
+    color: #eca63f;
+  }
+
+  .header-nav a.active::before {
+    content: "☀";
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .header-guide {
+    position: relative;
+    flex: 0 0 140px;
+    width: 140px;
+    height: 38px;
+    overflow: hidden;
+  }
+
+  .header-guide img {
+    position: absolute;
+    left: -6px;
+    top: -18px;
+    width: 152px;
+    height: 69px;
+  }
+
+  .header-guide strong,
+  .header-guide span {
+    position: absolute;
+    left: 30px;
+    z-index: 1;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .header-guide strong { top: 8px; color: #e74c1f; }
+  .header-guide span { top: 20px; color: #111; font-weight: 700; }
+
+  @media (max-width: 1159px) {
+    .site-header { padding: 0 20px; }
+    .header-search { width: min(30vw, 366px); }
+    .header-nav { overflow-x: auto; gap: 28px; justify-content: flex-start; scrollbar-width: none; }
+    .header-nav::-webkit-scrollbar { display: none; }
+  }
+
+  @media (max-width: 767px) {
+    :root { --header-height: 68px; }
+    .header-top { padding: 8px 16px; }
+    .site-header { padding: 0; }
+    .header-search { width: 44px; }
+    .header-search input { display: none; }
+    .header-logo { width: 160px; height: auto; }
+    .header-nav { display: none; }
+  }
+
+  @media (max-width: 599px) {
+    :root { --gutter: 16px; }
+    .header-logo { width: 136px; }
+    .header-login { font-size: 14px; }
+  }
+
+  /* ===================== ПЕРВЫЙ БЛОК (лента) ===================== */
+  .hero-section { padding-top: 48px; }
+
+  .hero-grid {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    padding: 0 0 56px;
+  }
+
+  .hero-main {
+    position: relative;
+    flex: 1 1 680px;
+    aspect-ratio: 1160 / 660;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,0.35), transparent 55%),
+      linear-gradient(135deg, #cdb896 0%, #a68a63 45%, #7c6a55 100%);
+  }
+
+  .hero-main-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 24px 32px 44px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0) 55%);
+    color: #fff;
+  }
+
+  .hero-main-category { margin: 0; font-size: 13px; font-weight: 500; opacity: 0.6; }
+
+  .hero-main-title {
+    margin: 0;
+    max-width: 80%;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    font-size: clamp(20px, 2.3vw, 30px);
+    line-height: 1.25;
+  }
+
+  .hero-main-time { margin: 0; font-size: 13px; font-weight: 500; opacity: 0.6; }
+
+  .hero-main-dots {
+    position: absolute;
+    left: 32px;
+    bottom: 16px;
+    display: flex;
+    gap: 6px;
+  }
+
+  .hero-main-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+  }
+  .hero-main-dots span.active { background: #fff; }
+
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-arrow--prev { left: 16px; }
+  .hero-arrow--next { right: 16px; }
+
+  .hero-list {
+    flex: 0 0 380px;
+    max-width: 464px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero-list-item {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .hero-list-thumb {
+    width: 140px;
+    flex-shrink: 0;
+    aspect-ratio: 180 / 124;
+    background: linear-gradient(135deg, var(--tone-a, #d9d2c4), var(--tone-b, #a89c86));
+  }
+
+  .hero-list-item:nth-child(1) .hero-list-thumb { --tone-a: #e7e1d6; --tone-b: #b9ab8f; }
+  .hero-list-item:nth-child(2) .hero-list-thumb { --tone-a: #cfd9dd; --tone-b: #8a9aa1; }
+  .hero-list-item:nth-child(3) .hero-list-thumb { --tone-a: #ddd0d6; --tone-b: #a98d97; }
+
+  .hero-list-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .hero-list-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .hero-list-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #0f0f0f;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 899px) {
+    .hero-grid { flex-direction: column; }
+    .hero-main { aspect-ratio: 4 / 3; }
+    .hero-list { flex: 1; max-width: none; }
+  }
+
+  @media (max-width: 599px) {
+    .hero-section { padding-top: 16px; }
+    .hero-grid { padding-bottom: 40px; gap: 24px; }
+    .hero-main-overlay { padding: 16px 16px 32px; }
+    .hero-list-thumb { width: 104px; }
+  }
+
+  /* ===================== Прочее (заполнитель) ===================== */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 0 0 96px;
+  }
+
+  @media (max-width: 899px) {
+    .cards { grid-template-columns: 1fr; padding-bottom: 64px; }
+  }
+
+  .card {
+    background: #f7f7f8;
+    border-radius: 12px;
+    padding: 32px 24px;
+    height: 220px;
+  }
+
+  .card .dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #d9d9de;
+    margin-bottom: 16px;
+  }
+
+  footer.site-footer {
+    border-top: 1px solid #eee;
+    font-size: 13px;
+    color: #999;
+  }
+
+  .footer-inner {
+    padding: 32px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Горизонтальный брендинг (баннер над хедером) =====
+     Полоса на всю ширину экрана, цвет фона задаётся через color picker
+     и переменную --banner-bg (контрол внизу справа).
+     Само изображение — фиксированные 1160×160 по центру, поверх
+     него — оверлей с градиентом в цвет фона, мягко "растворяющий"
+     края картинки в заливку (как в макете Figma). */
+  .top-banner {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    height: var(--banner-height);
+    background-color: var(--banner-bg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease;
+  }
+
+  /* рамка ровно по размеру картинки (1160×160) — фейд считается
+     в процентах именно от неё, а не от всей ширины экрана */
+  .top-banner-frame {
+    position: relative;
+    width: 1160px;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  .top-banner img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .top-banner-fade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--banner-bg) 0%,
+      transparent 9.5%,
+      transparent 91%,
+      var(--banner-bg) 100%
+    );
+    transition: background 0.25s ease;
+  }
+
+  /* < 1160px — рамка баннера становится флюидной (на всю ширину экрана,
+     чёрных полос по бокам больше нет), поэтому и затемнение не нужно */
+  @media (max-width: 1159.98px) {
+    .top-banner-fade { display: none; }
+  }
+
+  .banner-color-picker {
+    position: fixed;
+    bottom: 60px;
+    right: 16px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #111;
+    color: #fff;
+    border-radius: 6px;
+    font: 500 12px/1.4 "Manrope", sans-serif;
+    cursor: pointer;
+  }
+
+  .banner-color-picker input[type="color"] {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    background: transparent;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .banner-color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .banner-color-picker input[type="color"]::-webkit-color-swatch {
+    border: 0;
+    border-radius: 50%;
+  }
+
+  .banner-color-picker input[type="color"]::-moz-color-swatch {
+    border: 0;
+    border-radius: 50%;
+  }
+
+  /* ===== Вертикальный брендинг по бокам =====
+     position: absolute (не fixed) — блок живёт в потоке страницы,
+     привязан к её верхней части и уезжает вместе с остальным
+     контентом при скролле, а не остаётся прилипшим к экрану.
+     top: banner-height — блок начинается сразу под верхним
+     горизонтальным баннером и идёт по бокам от встроенного в контент
+     хедера, образуя П-образное обрамление. bottom:0 тянет блок до конца страницы.
+     Ширина тянется на всю доступную ширину от края контентной
+     колонки до края экрана (растёт неограниченно вместе с вьюпортом).
+     От 1500px основная картинка заполняет всю ширину бокового поля.
+     В диапазоне 1366–1499px используется альтернативная картинка шириной до 120px,
+     которая сжимается, если боковое поле становится уже. */
+  .branding {
+    position: absolute;
+    top: var(--banner-height);
+    bottom: 0;
+    width: calc((100vw - var(--content-width)) / 2);
+    /* без собственного фона — просвечивает белый цвет фона сайта */
+    background: none;
+    overflow: hidden;
+    display: none; /* < 1366px — скрыт полностью */
+    z-index: 0;
+  }
+
+  /* правый блок: левый край прибит к правому краю контентной колонки, растёт вправо */
+  .branding--right {
+    left: calc(50% + (var(--content-width) / 2));
+  }
+
+  /* левый блок: правый край прибит к левому краю контентной колонки, растёт влево */
+  .branding--left {
+    right: calc(50% + (var(--content-width) / 2));
+  }
+
+  .branding img {
+    display: block;
+    position: absolute;
+    top: 0;
+    /* Изображение заполняет боковое поле по ширине на всех экранах,
+       где брендинг виден; height:auto сохраняет пропорцию 160:460. */
+    width: 100%;
+    height: auto;
+  }
+
+  /* картинка всегда у края, ближнего к контентной колонке */
+  .branding--right img { left: 0; }
+  .branding--left img { right: 0; }
+
+  /* От 1366px брендинг виден; ниже — полностью скрыт. */
+  @media (min-width: 1366px) {
+    .branding { display: block; }
+  }
+
+  /* Альтернативный брендинг: не шире 120px и не шире бокового поля. */
+  @media (min-width: 1366px) and (max-width: 1499px) {
+    .branding img { width: min(120px, 100%); }
+  }
+
+  .viewport-badge {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(17,17,17,0.85);
+    color: #fff;
+    font: 12px/1.4 monospace;
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 10;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+  <aside class="branding branding--left">
+    <picture>
+      <source media="(max-width: 1499px)" srcset="left-side-1499.webp?v=20260804-1">
+      <img src="left-side.webp?v=20260803-1544" alt="">
+    </picture>
+  </aside>
+
+  <div class="content">
+    <div class="top-banner" id="topBanner">
+      <div class="top-banner-frame">
+        <img src="top-banner.webp" alt="">
+        <div class="top-banner-fade" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="header-top">
+        <label class="header-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="7.5" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+          <input type="search" placeholder="Поиск..." aria-label="Поиск">
+        </label>
+
+        <a class="header-logo" href="#" aria-label="Москвичка">
+          <img src="header-logo.svg" alt="Москвичка">
+        </a>
+
+        <button class="header-login" type="button">Войти</button>
+      </div>
+
+      <nav class="header-nav" aria-label="Основные разделы">
+        <a class="active" href="#">Журнал</a>
+        <a href="#">Вещи</a>
+        <a href="#">Люди</a>
+        <a href="#">Места</a>
+        <a href="#">События</a>
+        <a href="#">Тренды</a>
+        <a href="#">Рецепты</a>
+        <a href="#">Тесты</a>
+        <a href="#">Бренды</a>
+        <a class="header-guide" href="#" aria-label="Гид по Санкт-Петербургу">
+          <img src="header-guide.png" alt="">
+          <strong>ГИД</strong>
+          <span>ПО СПБ</span>
+        </a>
+      </nav>
+    </header>
+
+    <section class="hero-section">
+      <div class="hero-grid">
+        <article class="hero-main">
+          <div class="hero-main-overlay">
+            <p class="hero-main-category">Вещи</p>
+            <h3 class="hero-main-title">Краснеть красиво: почему румяна снова в центре внимания</h3>
+            <p class="hero-main-time">Сегодня в 13:19</p>
+          </div>
+          <div class="hero-main-dots">
+            <span class="active"></span><span></span><span></span><span></span><span></span>
+          </div>
+          <button class="hero-arrow hero-arrow--prev" aria-hidden="true">‹</button>
+          <button class="hero-arrow hero-arrow--next" aria-hidden="true">›</button>
+        </article>
+
+        <div class="hero-list">
+          <article class="hero-list-item">
+            <div class="hero-list-thumb"></div>
+            <div class="hero-list-body">
+              <div class="hero-list-meta"><span>Вещи</span><span>Сегодня в 15:20</span></div>
+              <p class="hero-list-title">«Москвичка» и RINK выпустили летний набор</p>
+            </div>
+          </article>
+          <article class="hero-list-item">
+            <div class="hero-list-thumb"></div>
+            <div class="hero-list-body">
+              <div class="hero-list-meta"><span>Тренды</span><span>10.07.2026 в 09:39</span></div>
+              <p class="hero-list-title">Смело, комфортно, иронично: как завтра будут одеваться российские мужчины</p>
+            </div>
+          </article>
+          <article class="hero-list-item">
+            <div class="hero-list-thumb"></div>
+            <div class="hero-list-body">
+              <div class="hero-list-meta"><span>Тренды</span><span>10.07.2026 в 12:40</span></div>
+              <p class="hero-list-title">Салонные новинки лета: от мгновенного сияния кожи до восстановления волос</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="card"><div class="dot"></div>Раздел контента 1</div>
+      <div class="card"><div class="dot"></div>Раздел контента 2</div>
+      <div class="card"><div class="dot"></div>Раздел контента 3</div>
+    </section>
+
+    <section class="cards">
+      <div class="card"><div class="dot"></div>Раздел контента 4</div>
+      <div class="card"><div class="dot"></div>Раздел контента 5</div>
+      <div class="card"><div class="dot"></div>Раздел контента 6</div>
+    </section>
+
+    <section class="cards">
+      <div class="card"><div class="dot"></div>Раздел контента 7</div>
+      <div class="card"><div class="dot"></div>Раздел контента 8</div>
+      <div class="card"><div class="dot"></div>Раздел контента 9</div>
+    </section>
+
+    <section class="cards">
+      <div class="card"><div class="dot"></div>Раздел контента 10</div>
+      <div class="card"><div class="dot"></div>Раздел контента 11</div>
+      <div class="card"><div class="dot"></div>Раздел контента 12</div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>© 2026 Moskvichka</span>
+        <span>Брейкпоинты брендинга: 1366 / 1500</span>
+      </div>
+    </footer>
+  </div>
+
+  <aside class="branding branding--right">
+    <picture>
+      <source media="(max-width: 1499px)" srcset="right-side-1499.webp?v=20260804-1">
+      <img src="right-side.webp?v=20260803-1544" alt="">
+    </picture>
+  </aside>
+
+  <div class="viewport-badge" id="viewportBadge"></div>
+
+  <label class="banner-color-picker" for="bannerColor">
+    <input id="bannerColor" type="color" value="#d1e5d7" aria-label="Цвет фона баннера">
+    <span id="bannerColorLabel">Цвет баннера: #D1E5D7</span>
+  </label>
+
+  <script>
+    function updateBadge() {
+      var w = window.innerWidth;
+      var sideWidth = Math.max(0, (w - 1160) / 2);
+      var brandWidth = w < 1500 ? Math.min(120, sideWidth) : sideWidth;
+      var stage = w < 1366
+        ? 'брендинг скрыт'
+        : (w < 1500 ? 'брендинг alt ' : 'брендинг ') + Math.round(brandWidth) + 'px';
+      document.getElementById('viewportBadge').textContent = w + 'px — ' + stage;
+    }
+    updateBadge();
+    window.addEventListener('resize', updateBadge);
+
+    (function () {
+      var picker = document.getElementById('bannerColor');
+      var label = document.getElementById('bannerColorLabel');
+
+      function updateBannerColor() {
+        var color = picker.value.toUpperCase();
+        document.documentElement.style.setProperty('--banner-bg', color);
+        label.textContent = 'Цвет баннера: ' + color;
+      }
+
+      picker.addEventListener('input', updateBannerColor);
+      picker.addEventListener('change', updateBannerColor);
+    })();
+  </script>
+
+</body>
+</html>
